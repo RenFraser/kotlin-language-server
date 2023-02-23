@@ -1,10 +1,8 @@
 name: Deploy
-
 on:
   push:
     branches:
       - '*'
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
