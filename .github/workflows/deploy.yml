@@ -1,8 +1,9 @@
 name: Deploy
 on:
-  push:
-    tags:
-      - '*'
+  workflow_run:
+    workflows: [Tag]
+    types:
+      - completed
 
 jobs:
   deploy:
@@ -15,6 +16,9 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '11'
+      - name: Get latest tag
+        uses: actions-ecosystem/action-get-latest-tag@v1
+        id: get-latest-tag
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
       - name: Build distribution
@@ -25,7 +29,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
+          tag_name: ${{ steps.get-latest-tag.outputs.tag }}
           release_name: Version ${{ github.ref }}
           draft: false
           prerelease: false
