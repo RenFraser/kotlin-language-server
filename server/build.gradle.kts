@@ -125,6 +125,9 @@ tasks.withType<Test>() {
     }
 }
 
+// override the distribution name from server-<version>.zip to server.zip
+tasks.distZip.get().archiveFileName.set("${project.name}.zip")
+
 tasks.installDist {
     finalizedBy("fixFilePermissions")
 }
