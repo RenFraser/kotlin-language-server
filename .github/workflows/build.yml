@@ -3,7 +3,7 @@ name: Build
 on:
   push:
     branches:
-      - main
+      - autobump-test
   pull_request:
   workflow_dispatch:
 
